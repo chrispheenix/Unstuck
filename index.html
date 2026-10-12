@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>UNSTUCK</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#101011;--card:#292322;--gold:#D4A044;--ember:#C45B38;--red:#8F302D;--ink:#F3E9DC;--mute:#B5A596;--line:rgba(212,160,68,.22);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font:400 16px/1.55 Manrope,system-ui,-apple-system,Segoe UI,sans-serif;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:auto -20% -30% -20%;height:70vh;background:radial-gradient(ellipse at 50% 100%,rgba(196,91,56,.34),rgba(143,48,45,.16) 45%,transparent 70%);pointer-events:none}
+#embers{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+#embers i{position:absolute;bottom:-10px;width:4px;height:4px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px 2px rgba(212,160,68,.6);opacity:0;animation:rise linear infinite}
+@keyframes rise{0%{transform:translateY(0);opacity:0}15%{opacity:.8}100%{transform:translateY(-75vh) translateX(18px);opacity:0}}
+@media (prefers-reduced-motion:reduce){#embers{display:none}.screen{animation:none!important}}
+#app{position:relative;max-width:480px;margin:0 auto;padding:22px 20px 40px}
+.screen{animation:fade .25s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;margin:0;letter-spacing:-.01em}
+.brand{display:flex;align-items:center;gap:10px;font:800 17px Fraunces,Georgia,serif;letter-spacing:.14em;color:var(--gold)}
+.brand svg{width:26px;height:26px}
+.hero{margin:44px 0 28px}
+.hero h1{font-size:clamp(40px,12vw,56px);font-weight:800;line-height:1.02}
+.hero p{color:var(--mute);margin:14px 0 0;max-width:34ch}
+.btn{display:block;width:100%;border:1px solid var(--line);border-radius:16px;padding:16px 20px;font:700 16px Manrope,sans-serif;color:var(--ink);background:var(--card);cursor:pointer;transition:transform .12s,box-shadow .2s}
+.btn:active{transform:scale(.98)}
+.btn:focus-visible,.cat:focus-visible,.time:focus-visible,.link:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.btn.fire{padding:20px;font-size:18px;border:0;background:linear-gradient(135deg,var(--ember),var(--red));box-shadow:0 0 28px rgba(196,91,56,.45),inset 0 0 0 1px rgba(212,160,68,.45)}
+.btn.fire:hover{box-shadow:0 0 38px rgba(196,91,56,.65),inset 0 0 0 1px var(--gold)}
+.btn.gold{background:var(--gold);color:#1a1209;border:0}
+.btn.sel{border-color:var(--gold);box-shadow:0 0 16px rgba(212,160,68,.35)}
+.sub{margin:30px 0 12px;color:var(--mute);font-size:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cat{background:var(--card);border:1px solid transparent;border-radius:18px;padding:16px 14px;text-align:left;color:var(--ink);font:inherit;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+.cat:hover,.cat.on{border-color:var(--gold);box-shadow:0 0 18px rgba(212,160,68,.22)}
+.cat b{display:block;font:600 17px Fraunces,Georgia,serif}
+.cat span{display:block;margin-top:4px;font-size:13px;color:var(--mute);line-height:1.35}
+.stat{margin-top:26px;text-align:center;color:var(--mute);font-size:13px}
+.link{background:none;border:0;color:var(--mute);font:600 14px Manrope,sans-serif;padding:8px 0;cursor:pointer}
+h2{font-size:32px;font-weight:800;line-height:1.1;margin:26px 0 8px}
+.lead{color:var(--mute);margin:0 0 24px}
+.times{display:grid;gap:12px}
+.time{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid transparent;border-radius:18px;padding:22px 20px;color:var(--ink);font:inherit;cursor:pointer;text-align:left}
+.time:hover{border-color:var(--gold);box-shadow:0 0 18px rgba(212,160,68,.22)}
+.time b{font:800 28px Fraunces,Georgia,serif}
+.time span{color:var(--mute);font-size:14px}
+.card{background:var(--card);border-radius:22px;padding:22px;border:1px solid var(--line);box-shadow:0 10px 40px rgba(0,0,0,.45)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{font-size:12px;font-weight:700;color:var(--gold);border:1px solid var(--line);border-radius:99px;padding:3px 11px}
+.chip.ok{color:#1a1209;background:var(--gold);border-color:var(--gold)}
+.card h3{font-size:28px;font-weight:800;line-height:1.12}
+.card p{margin:12px 0 0}
+.meta{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:18px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:14px}
+.meta dt{color:var(--mute)}.meta dd{margin:0}
+.ph{margin-top:16px;border:1px dashed rgba(212,160,68,.4);border-radius:16px;padding:14px;font-size:13px;color:var(--mute)}
+.ph div{display:flex;gap:8px;margin-top:10px}
+.ph button{flex:1;border:1px solid var(--line);background:transparent;color:var(--mute);border-radius:12px;padding:9px;font:600 13px Manrope,sans-serif;opacity:.55;cursor:not-allowed}
+.stack{display:grid;gap:12px;margin-top:18px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.center{text-align:center}
+.thanks{min-height:24px;margin:16px 0 0;color:var(--gold);font-weight:600}
+@media (min-width:700px){#app{padding-top:48px}}
+</style>
+</head>
+<body>
+<div id="embers" aria-hidden="true"></div>
+<main id="app"></main>
+<script>
+/* ---------- DATA: add challenges here (id stays stable, min = duration in minutes) ---------- */
+const CATS=[
+ {id:'ideas',name:'No Ideas',tag:'Blank project, blank mind'},
+ {id:'beat',name:'Stuck on a Beat',tag:"The groove won't land"},
+ {id:'energy',name:'Low Energy',tag:'Motivation is at zero'},
+ {id:'finish',name:"Can't Finish",tag:'Ten loops, zero songs'},
+ {id:'growth',name:'Producer Growth',tag:'Level up your craft'},
+ {id:'flip',name:'Flip This Idea',tag:'Rework what you have'}];
+const TIMES=[
+ {label:'5 min',sub:'A quick spark',max:5},
+ {label:'15 min',sub:'A focused sprint',max:15},
+ {label:'30+ min',sub:'A deep session',max:60}];
+const C=[
+ ['ID-01','ideas',5,'Sound First','Record five random sounds around you: keys, a cup, a door. Pick the best one, pitch it down an octave and loop it. That loop is your seed.','Phone or mic, any DAW'],
+ ['ID-02','ideas',5,'One Chord Wonder','Pick one chord at random. Play it for four bars in three different voicings and keep the one that gives you a feeling.','Keyboard or any chord plugin'],
+ ['ID-03','ideas',15,'Genre Roulette','Pick two genres blindly. Write eight bars that blend the drums of one with the harmony of the other. No editing until the timer ends.','DAW, drum sounds, one synth'],
+ ['ID-04','ideas',30,'Title First','Write a track title, a mood and three colors. Build a 16-bar sketch that fits only those words, nothing else.','DAW, any instruments'],
+ ['BT-01','beat',5,'Mute Everything','Mute everything except drums and bass. Loop four bars and listen. Remove the one element that does not push the groove.','DAW'],
+ ['BT-02','beat',5,'Swing Shift','Apply 55 to 60% swing to the hi-hats only. Then nudge the snare 10 ms late. A/B it against the original.','DAW, drum rack or sequencer'],
+ ['BT-03','beat',15,'Rebuild the Drums','Delete your drum track. Rebuild it from sounds you have never used before and loop eight bars.','DAW, a fresh drum sample folder'],
+ ['BT-04','beat',30,'Reference Autopsy','Drop a favorite track into your project and match its loudness. Copy its section lengths onto your beat and see what is missing.','DAW, reference track, headphones'],
+ ['EN-01','energy',5,'Desk Reset','Stand up, stretch, drink water. Then open a new project and make one kick pattern in 60 seconds. Do not save it.','DAW'],
+ ['EN-02','energy',5,'Favorite Loop','Open a sample pack you love and drag the first loop you like into a new project. Play it loud and add exactly one sound.','DAW, sample pack'],
+ ['EN-03','energy',15,'Instrument Swap','Open a plugin or machine you barely use. Make a four-bar loop with only that instrument.','Any unfamiliar synth or drum machine'],
+ ['EN-04','energy',30,"Play, Don't Edit",'Set a timer and jam on keys or pads while recording everything. Only afterwards pick your best eight bars.','MIDI keyboard or pads, DAW'],
+ ['FN-01','finish',5,'Name the Sections','Label every section of your arrangement: intro, build, drop, outro. Delete anything that has no clear job.','DAW'],
+ ['FN-02','finish',5,'The Last 10%','List three small tasks left in your track, like a fade or a transition. Do only the easiest one.','DAW'],
+ ['FN-03','finish',15,'Rough Mix Pass','Reset all faders. Set levels by ear in 15 minutes with no plugin tweaking. Bounce a rough mix.','DAW, headphones'],
+ ['FN-04','finish',30,'Deadline Export','Declare it finished. Lock the arrangement, add a simple master chain, export a WAV and listen on your phone speaker.','DAW, limiter, phone'],
+ ['GR-01','growth',5,'Ear Training Sprint','Pick any song. Write down its key, its tempo and the first sound that grabs you.','Headphones, any track'],
+ ['GR-02','growth',5,'Shortcut Drill','Look up one DAW shortcut you do not use yet. Use it ten times in a row on a real project.','DAW'],
+ ['GR-03','growth',15,'Template Upgrade','Open your project template. Add one go-to bus, color-code your tracks and save it as the new default.','DAW'],
+ ['GR-04','growth',30,'Sound Design Lab','Recreate one sound from a favorite track with a synth. Save it as a preset and name it.','DAW, synth, reference track'],
+ ['FL-01','flip',5,'Reverse It','Take a short snippet from your project, reverse it and use it as a riser or transition.','DAW'],
+ ['FL-02','flip',5,'Half-Time Flip','Switch your tempo to half or double while keeping the pitch. Listen for the new groove that appears.','DAW'],
+ ['FL-03','flip',15,'Chop and Resample','Bounce eight bars of your idea and chop them into 16 slices. Play a new melody using only those slices.','DAW, sampler'],
+ ['FL-04','flip',30,'Genre Remix','Remix your own idea into a totally different genre. Keep only one element of the original.','DAW, a few genre-specific sounds']
+].map(([id,cat,min,title,text,gear])=>({id,cat,min,title,text,gear}));
+
+/* ---------- STORAGE (localStorage, fails silently if unavailable) ---------- */
+const KEY='unstuck.v1';
+function load(){try{return Object.assign({done:[],fb:{}},JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){return{done:[],fb:{}}}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+let store=load();
+
+/* ---------- STATE + LOGIC ---------- */
+const S={screen:'home',cat:null,surprise:false,time:null,cur:null,last:null,answered:null};
+const rnd=n=>Math.floor(Math.random()*n);
+const catName=id=>CATS.find(c=>c.id===id).name;
+
+function pick(){
+  if(S.surprise)S.cat=CATS[rnd(CATS.length)].id;
+  const max=TIMES[S.time].max;
+  const pool=C.filter(c=>c.cat===S.cat&&c.min<=max);
+  let cand=pool.filter(c=>c.id!==S.last);
+  if(!cand.length)cand=pool;
+  const fresh=cand.filter(c=>!store.done.includes(c.id));
+  const list=fresh.length?fresh:cand;
+  S.cur=list[rnd(list.length)];
+  S.last=S.cur.id;
+  S.answered=store.fb[S.cur.id]||null;
+}
+
+/* ---------- VIEWS ---------- */
+const flame='<svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#8F302D"/><stop offset=".55" stop-color="#C45B38"/><stop offset="1" stop-color="#D4A044"/></linearGradient></defs><path fill="url(#g)" d="M12 1.5c.9 3.8 5.5 6 5.5 11.2a5.5 5.5 0 0 1-11 0c0-2.2 1-3.6 2.2-4.8.1 2 .9 3 1.9 3.3C10 7.8 10.3 4.6 12 1.5z"/></svg>';
+const brand='<div class="brand">'+flame+'UNSTUCK</div>';
+
+const views={
+ home:()=>brand+`<section class="screen"><div class="hero"><h1>Stuck? Reignite the spark.</h1><p>Short, randomized challenges that get your hands back on the music.</p></div>
+  <button class="btn fire" data-a="surprise">Surprise Me</button>
+  <p class="sub">Or pick what is blocking you</p>
+  <div class="grid">${CATS.map(c=>`<button class="cat" data-a="cat" data-v="${c.id}"><b>${c.name}</b><span>${c.tag}</span></button>`).join('')}</div>
+  <p class="stat">${store.done.length} of ${C.length} challenges completed</p></section>`,
+ time:()=>brand+`<section class="screen"><button class="link" data-a="home">&larr; Back</button>
+  <h2>How much time do you have?</h2><p class="lead">${S.surprise?'Surprise Me will pick any category.':'Category: '+catName(S.cat)+'.'}</p>
+  <div class="times">${TIMES.map((t,i)=>`<button class="time" data-a="time" data-v="${i}"><b>${t.label}</b><span>${t.sub}</span></button>`).join('')}</div></section>`,
+ challenge:()=>{const c=S.cur,done=store.done.includes(c.id);return brand+`<section class="screen" style="margin-top:22px">
+  <div class="card"><div class="chips"><span class="chip">${catName(c.cat)}</span>${done?'<span class="chip ok">Done before</span>':''}</div>
+  <h3>${c.title}</h3><p>${c.text}</p>
+  <dl class="meta"><dt>Duration</dt><dd>About ${c.min} min</dd><dt>Equipment</dt><dd>${c.gear}</dd></dl>
+  <div class="ph">Starter audio preview and download (not yet implemented)<div><button disabled aria-disabled="true">Preview</button><button disabled aria-disabled="true">Download</button></div></div></div>
+  <div class="stack"><button class="btn gold" data-a="done">Mark as Done</button><button class="btn" data-a="another">Try Another</button></div></section>`},
+ feedback:()=>brand+`<section class="screen center"><h2 style="margin-top:56px">Did this help?</h2><p class="lead">${S.cur.title}</p>
+  <div class="row"><button class="btn ${S.answered==='yes'?'sel':''}" data-a="fb" data-v="yes">Yes</button><button class="btn ${S.answered==='no'?'sel':''}" data-a="fb" data-v="no">No</button></div>
+  <p class="thanks">${S.answered==='yes'?'Great. Keep the fire going.':S.answered==='no'?'Noted. The next one might hit harder.':''}</p>
+  <div class="stack"><button class="btn fire" data-a="next">Next Challenge</button><button class="btn" data-a="home">Back to Home</button></div></section>`
+};
+
+function render(){document.getElementById('app').innerHTML=views[S.screen]();window.scrollTo(0,0)}
+function go(s){S.screen=s;render()}
+
+/* ---------- EVENTS ---------- */
+document.getElementById('app').addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');if(!b)return;
+  const a=b.dataset.a,v=b.dataset.v;
+  if(a==='surprise'){S.surprise=true;S.cat=null;go('time')}
+  else if(a==='cat'){S.surprise=false;S.cat=v;go('time')}
+  else if(a==='time'){S.time=+v;pick();go('challenge')}
+  else if(a==='another'){pick();go('challenge')}
+  else if(a==='done'){if(!store.done.includes(S.cur.id))store.done.push(S.cur.id);save();S.answered=store.fb[S.cur.id]||null;go('feedback')}
+  else if(a==='fb'){S.answered=v;store.fb[S.cur.id]=v;save();render()}
+  else if(a==='next'){pick();go('challenge')}
+  else if(a==='home'){S.last=null;go('home')}
+});
+
+/* ---------- EMBERS (decorative) ---------- */
+const em=document.getElementById('embers');
+for(let i=0;i<14;i++){const d=document.createElement('i');d.style.left=rnd(100)+'%';d.style.animationDuration=(7+rnd(8))+'s';d.style.animationDelay=(-rnd(12))+'s';d.style.transform='scale('+(0.6+Math.random())+')';em.appendChild(d)}
+render();
+</script>
+</body>
+</html>
